@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movie/Detail.dart';
 import 'movie_list.dart';
 
 void main() {
-  runApp(const Movies());
+  runApp(const Detail());
+  // runApp(const Movies());
 }
 
 class Movies extends StatelessWidget {
@@ -15,7 +17,7 @@ class Movies extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
       ),
-      home: MovieList(),
+      home: const Detail(),
     );
   }
 }
