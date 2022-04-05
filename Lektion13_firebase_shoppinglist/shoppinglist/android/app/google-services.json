@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "964300291957",
+    "firebase_url": "https://shoppinglist-3006a-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "shoppinglist-3006a",
+    "storage_bucket": "shoppinglist-3006a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964300291957:android:2814d81494e7a5f50add3c",
+        "android_client_info": {
+          "package_name": "firebase.shoppinglist.flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "964300291957-mlktnndmg7f5inuhmc376r1j2e9vojcn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzDMyW1z2uhFf5ynTlIVoNxYMvYZrtFEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "964300291957-mlktnndmg7f5inuhmc376r1j2e9vojcn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

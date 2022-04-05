@@ -1,0 +1,154 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Lektion02",
+            "cwd": "Lektion02",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "first_app",
+            "cwd": "First Project/first_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "first_app (profile mode)",
+            "cwd": "First Project/first_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "first_app (release mode)",
+            "cwd": "First Project/first_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "lektion02",
+            "cwd": "Lektion02_flutterproject/lektion02",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "lektion02 (profile mode)",
+            "cwd": "Lektion02_flutterproject/lektion02",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "lektion02 (release mode)",
+            "cwd": "Lektion02_flutterproject/lektion02",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "movie",
+            "cwd": "Lektion03/movie",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "movie (profile mode)",
+            "cwd": "Lektion03/movie",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "movie (release mode)",
+            "cwd": "Lektion03/movie",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "pokemon",
+            "cwd": "Lektion05/pokemon",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "pokemon (profile mode)",
+            "cwd": "Lektion05/pokemon",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "pokemon (release mode)",
+            "cwd": "Lektion05/pokemon",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "my_pokemon_app",
+            "cwd": "Lektion07/my_pokemon_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "my_pokemon_app (profile mode)",
+            "cwd": "Lektion07/my_pokemon_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "my_pokemon_app (release mode)",
+            "cwd": "Lektion07/my_pokemon_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "lektion12",
+            "cwd": "Lektion12_imagepicker/lektion12",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "lektion12 (profile mode)",
+            "cwd": "Lektion12_imagepicker/lektion12",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "lektion12 (release mode)",
+            "cwd": "Lektion12_imagepicker/lektion12",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "shoppinglist",
+            "cwd": "Lektion13_firebase_shoppinglist/shoppinglist",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "shoppinglist (profile mode)",
+            "cwd": "Lektion13_firebase_shoppinglist/shoppinglist",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "shoppinglist (release mode)",
+            "cwd": "Lektion13_firebase_shoppinglist/shoppinglist",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

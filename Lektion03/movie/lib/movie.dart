@@ -1,14 +1,16 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Movie {
-  final String title;
-  final String year;
-  final String runtime;
-  final String genre;
-  final String director;
-  final String actors;
-  final String plot;
-  final String country;
-  final String awards;
-  final String poster;
+  String title;
+  String year;
+  String runtime;
+  String genre;
+  String director;
+  String actors;
+  String plot;
+  String country;
+  String awards;
+  String poster;
 
   Movie(this.title, this.year, this.runtime, this.genre, this.director,
       this.actors, this.plot, this.country, this.awards, this.poster);
@@ -24,4 +26,20 @@ class Movie {
         country = json["country"],
         awards = json["awards"],
         poster = json["poster"];
+}
+
+addStringToSF() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString("name", "");
+}
+
+getStringValuesSF() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String value = prefs.getString("name") ?? "";
+  return value;
+}
+
+removeValues() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.remove("name");
 }

@@ -11,7 +11,7 @@ class Detail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edge of Tomorrow"),
+        title: const Text("Edge of Tomorrow"),
       ),
       body: Column(
         children: [
@@ -37,15 +37,15 @@ class Detail extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Text(
+                  const Text(
                     "2014, USA, Canada",
                     style: TextStyle(height: 2),
                   ),
-                  Text(
+                  const Text(
                     "Action, SCI-FI, 113 min",
                     style: TextStyle(height: 2),
                   ),
-                  Text(
+                  const Text(
                     "11 wins & 37 nominations",
                     style: TextStyle(height: 2),
                   )
@@ -58,12 +58,12 @@ class Detail extends StatelessWidget {
               Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: const Text("Director"),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: Text(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: const Text(
                       "Doug Liman",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -73,9 +73,9 @@ class Detail extends StatelessWidget {
             ],
           ),
           Column(
-            children: [
+            children: const [
               Padding(padding: EdgeInsets.all(10.0)),
-              const Text("Actors:"),
+              Text("Actors:"),
               Text("Tom Cruise, Emiliy Blunt, Brendan Gleeson, Bill Paxton",
                   style: TextStyle(fontWeight: FontWeight.bold))
             ],
@@ -87,8 +87,7 @@ class Detail extends StatelessWidget {
             children: [
               Container(
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: Text(
-                    "helloooooooooohelloooooooooohelloooooooooohelloooooooooo"),
+                child: const Text("add"),
               )
             ],
           )
