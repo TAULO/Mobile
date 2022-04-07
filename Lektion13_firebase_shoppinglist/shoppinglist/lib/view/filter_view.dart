@@ -11,6 +11,15 @@ class FilterView extends StatefulWidget {
 }
 
 class _FilterViewState extends State<FilterView> {
+  PopupMenuItem departmentItem(Departments dep) {
+    return PopupMenuItem(
+        child: Text(dep.name),
+        onTap: () {
+          Provider.of<ItemState>(context, listen: false)
+              .filterDeparment(department: dep.name);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -19,52 +28,16 @@ class _FilterViewState extends State<FilterView> {
       child: PopupMenuButton(
         itemBuilder: (context) => [
           PopupMenuItem(
-            // ALL
             onTap: () {
               Provider.of<ItemState>(context, listen: false).addItemsFromDB();
             },
             child: const Text("All"),
           ),
-          PopupMenuItem(
-            // MEAT
-            onTap: () {
-              Provider.of<ItemState>(context, listen: false)
-                  .filterDeparment(department: Departments.meat.name);
-            },
-            child: Text(Departments.meat.name),
-          ),
-          PopupMenuItem(
-            // DELI
-            onTap: () {
-              Provider.of<ItemState>(context, listen: false)
-                  .filterDeparment(department: Departments.deli.name);
-            },
-            child: Text(Departments.deli.name),
-          ),
-          PopupMenuItem(
-            // HEALTH
-            onTap: () {
-              Provider.of<ItemState>(context, listen: false)
-                  .filterDeparment(department: Departments.health.name);
-            },
-            child: Text(Departments.health.name),
-          ),
-          PopupMenuItem(
-            // ALCOHOL
-            onTap: () {
-              Provider.of<ItemState>(context, listen: false)
-                  .filterDeparment(department: Departments.alcohol.name);
-            },
-            child: Text(Departments.alcohol.name),
-          ),
-          PopupMenuItem(
-            // SEAFOOD
-            onTap: () {
-              Provider.of<ItemState>(context, listen: false)
-                  .filterDeparment(department: Departments.seafood.name);
-            },
-            child: Text(Departments.seafood.name),
-          ),
+          departmentItem(Departments.alcohol),
+          departmentItem(Departments.deli),
+          departmentItem(Departments.health),
+          departmentItem(Departments.meat),
+          departmentItem(Departments.seafood),
         ],
       ),
     );
