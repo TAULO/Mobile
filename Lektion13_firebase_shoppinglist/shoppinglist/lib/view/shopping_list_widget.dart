@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppinglist/model/ItemState.dart';
 import 'package:shoppinglist/view/add_item_widget.dart';
-import 'package:shoppinglist/view/filter_view.dart';
+import 'package:shoppinglist/view/filterAscDesc_view.dart';
+import 'package:shoppinglist/view/filterDepartment_view.dart';
 import 'package:shoppinglist/view/item_list_widget.dart';
 import 'package:shoppinglist/view/location_view.dart';
 
@@ -18,7 +19,15 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: FilterDepartmentView(),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 50),
+          ),
+          FilterAscDesc(),
+        ],
         title: const Text("Shopping List"),
+        centerTitle: true,
       ),
       body: Stack(children: [
         const ShoppingItemList(),
@@ -59,36 +68,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           ),
         ),
         // filter ASC DESC btn
-        Positioned(
+        const Positioned(
           bottom: 25,
-          left: 80,
+          left: 15,
           // lav en ny klasse til denne (sort asc desc)
           child: FloatingActionButton(
             onPressed: null,
-            child: PopupMenuButton(
-              color: Colors.white,
-              itemBuilder: (context) => [
-                // ASC
-                PopupMenuItem(
-                  onTap: () => Provider.of<ItemState>(context, listen: false)
-                      .orderAmountAsc(),
-                  child: const Text("Ascending"),
-                ),
-                // DESC
-                PopupMenuItem(
-                  onTap: () => Provider.of<ItemState>(context, listen: false)
-                      .orderAmountDesc(),
-                  child: const Text("Descending"),
-                ),
-              ],
-            ),
           ),
-        ),
-        // Filter Deparments btn
-        Positioned(
-          bottom: 25,
-          left: 15,
-          child: FilterView(),
         ),
       ]),
       backgroundColor: Colors.lightBlueAccent,

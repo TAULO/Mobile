@@ -12,7 +12,8 @@ class LocationState extends ChangeNotifier {
   }
 
   Future<GeoPoint> _geo() async {
-    return Future.delayed(const Duration(seconds: 2))
-        .then((value) => _location.getGeo());
+    return _location.getGeo();
+    // return Future.delayed(const Duration(seconds: 2))
+    //     .then((value) => _location.getGeo());
   }
 }

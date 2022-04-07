@@ -53,11 +53,10 @@ class FirebaseService {
   }
 
   filterDeparments(String department) {
-    var hey = _items
+    return _items
         .where("department", isEqualTo: department)
         .get()
         .then((value) => value.docs.map((e) => e.data()));
-    return hey;
   }
 
   orderAmountDesc() {
@@ -70,6 +69,21 @@ class FirebaseService {
   orderAmountAsc() {
     return _items
         .orderBy("amount", descending: false)
+        .get()
+        .then((value) => value.docs.map((e) => e.data()));
+  }
+
+  // ved ikke om disse skal anvendes
+  orderAlphabeticalAsc() {
+    return _items
+        .orderBy("name", descending: true)
+        .get()
+        .then((value) => value.docs.map((e) => e.data()));
+  }
+
+  orderAlphabeticalDesc() {
+    return _items
+        .orderBy("name", descending: false)
         .get()
         .then((value) => value.docs.map((e) => e.data()));
   }

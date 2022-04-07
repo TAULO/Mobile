@@ -42,7 +42,7 @@ class ItemState extends ChangeNotifier {
   void filterDeparment({required String department}) async {
     _listItem.clear();
     for (var item in await _service.filterDeparments(department)) {
-      if (item != null) _listItem.add(Item.fromJSON(item, "0"));
+      _listItem.add(Item.fromJSON(item, "0"));
     }
     notifyListeners();
   }
