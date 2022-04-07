@@ -1,13 +1,7 @@
-// TODO configure firebase :
-// Add
-// Delete
-// Find
-// ignore_for_file: avoid_print
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../model/Item.dart';
 
-// later deparment should be added
 class FirebaseService {
   final CollectionReference _items =
       FirebaseFirestore.instance.collection("Items");
@@ -20,71 +14,50 @@ class FirebaseService {
   // FirebaseService({required this.items});
   FirebaseService();
 
-  // void enMetode(List<Item> itemList) {
-  //   _items.snapshots().listen((documents) {
-  //     itemList.clear();
-  //     for (var doc in documents.docs) {
-  //       itemList.add(doc.data());
-  //     }
-  //   });
-  // }
-
   void addItemsFromDB(List<Item> itemList) {
     itemsStream = firestore.collection("Items").snapshots();
     itemsStream!.listen((snapshot) {
       itemList.clear();
       snapshot.docs.forEach((element) {
-        itemList.add(Item.fromJSON(element.data()));
+        itemList.add(Item.fromJSON(element.data(), element.id));
       });
     });
   }
 
-  void addItem(String name, String department, int amount) {
-    Item item = Item(name: name, department: department, amount: amount);
+  void addItem(String name, int amount, String department) {
+    Item item = Item(name, amount, department, "0");
     // _items
-    //     .add(item.toJson())
-    //     .then((value) => print("added: " + name))
-    //     .catchError((eror) => print("Failed to add item: $name"));
-    _items
-        .doc(item.name)
-        .set(item.toJSON())
-        .then((value) => print("Added: " + name))
-        .catchError((error) => print("Failed to add: $error"));
+    //     .doc(item.name)
+    //     .set(item.toJSON())
+    //     .then((value) => print("Added: " + name))
+    //     .catchError((error) => print("Failed to add: $error"));
+    _items.add(item.toJSON()).then((value) => item.id = value.id);
   }
 
   Future<void> deleteItem(Item item) {
+    print(item.id);
     return _items
-        .doc(item.name)
+        .doc(item.id)
         .delete()
         .then((value) => (print(item.name + " was deleted")))
         .catchError((erorr) => print("Failed to delete: $erorr"));
   }
 
-  void updateItem(Item item, String name, String department, int amount) async {
-    item = Item(name: name, department: department, amount: amount);
+  void updateItem(Item item, String name, int amount, String department) async {
+    item = Item(name, amount, department, item.id);
     _items
-        .doc(name)
+        .doc(item.id)
         .update(item.toJSON())
         .then((value) => print("Updated: $name"))
         .catchError((error) => print("Faield to udpate $error"));
   }
 
-  getDocID(String name) async {
-    dynamic docID = _items
-        .where("name", isEqualTo: name)
-        .get()
-        .then((value) => value.docs.map((e) => e.id));
-
-    for (var id in await docID) {
-      return id;
-    }
-  }
-
   filterDeparments(String department) {
-    return _items
+    var hey = _items
         .where("department", isEqualTo: department)
         .get()
         .then((value) => value.docs.map((e) => e.data()));
+    return hey;
   }
 
   orderAmountDesc() {

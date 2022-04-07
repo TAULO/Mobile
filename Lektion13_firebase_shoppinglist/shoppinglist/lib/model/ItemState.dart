@@ -14,7 +14,6 @@ class ItemState extends ChangeNotifier {
   int get getCount => _listItem.length;
 
   ItemState() {
-    print("Itemstate");
     addItemsFromDB();
   }
 
@@ -24,7 +23,7 @@ class ItemState extends ChangeNotifier {
   }
 
   void addItem({required Item item}) {
-    _service.addItem(item.name, item.department, item.amount);
+    _service.addItem(item.name, item.amount, item.department);
     _listItem.add(item);
     notifyListeners();
   }
@@ -36,15 +35,14 @@ class ItemState extends ChangeNotifier {
   }
 
   void updateItem({required Item item}) {
-    _service.updateItem(item, item.name, item.department, item.amount);
+    _service.updateItem(item, item.name, item.amount, item.department);
     notifyListeners();
   }
 
   void filterDeparment({required String department}) async {
     _listItem.clear();
-    var items = await _service.filterDeparments(department);
-    for (var item in items) {
-      _listItem.add(Item.fromJSON(item));
+    for (var item in await _service.filterDeparments(department)) {
+      if (item != null) _listItem.add(Item.fromJSON(item, "0"));
     }
     notifyListeners();
   }
@@ -52,7 +50,7 @@ class ItemState extends ChangeNotifier {
   void orderAmountAsc() async {
     _listItem.clear();
     for (var item in await _service.orderAmountAsc()) {
-      _listItem.add(Item.fromJSON(item));
+      if (item != null) _listItem.add(Item.fromJSON(item, "0"));
     }
     notifyListeners();
   }
@@ -60,7 +58,7 @@ class ItemState extends ChangeNotifier {
   void orderAmountDesc() async {
     _listItem.clear();
     for (var item in await _service.orderAmountDesc()) {
-      _listItem.add(Item.fromJSON(item));
+      if (item != null) _listItem.add(Item.fromJSON(item, "0"));
     }
     notifyListeners();
   }

@@ -13,7 +13,7 @@ class AddItemPage extends StatefulWidget {
 class _AddItemPageState extends State<AddItemPage> {
   final GlobalKey<FormState> _globalKey = GlobalKey();
 
-  Item item = Item(name: "", department: "", amount: 0);
+  Item item = Item("name", 0, "department", "docID");
   String? _selectedDeparment;
 
   @override

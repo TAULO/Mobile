@@ -1,17 +1,28 @@
+import 'package:flutter/rendering.dart';
+
 enum Departments { meat, seafood, alcohol, health, deli }
 
 class Item {
   String name;
   int amount;
   String department;
+  String id;
 
-  Item({required this.name, required this.department, required this.amount});
+  Item(this.name, this.amount, this.department, this.id);
 
-  factory Item.fromJSON(Map<String, dynamic> json) {
+  factory Item.fromJSON(Map<String, dynamic> json, String id) {
     return Item(
-        name: json["name"],
-        department: json["department"],
-        amount: json["amount"]);
+      json["name"],
+      json["amount"],
+      json["department"],
+      id,
+    );
+  }
+
+  get docID => id;
+
+  set setDocID(String docId) {
+    id = docId;
   }
 
   Map<String, dynamic> toJSON() {
