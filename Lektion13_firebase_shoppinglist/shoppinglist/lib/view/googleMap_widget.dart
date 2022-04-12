@@ -76,17 +76,15 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
           mapController!.animateCamera(newPos);
         },
         onTap: (latLong) {
-          setState(
-            () {
-              MarkerId id = MarkerId(markerID.toString());
-              Marker newMarker = Marker(
-                markerId: id,
-                position: LatLng(latLong.latitude, latLong.longitude),
-              );
-              markers.add(newMarker);
-              markerID++;
-            },
-          );
+          setState(() {
+            MarkerId id = MarkerId(markerID.toString());
+            Marker newMarker = Marker(
+              markerId: id,
+              position: LatLng(latLong.latitude, latLong.longitude),
+            );
+            markers.add(newMarker);
+            markerID++;
+          });
         },
         markers: markers,
         circles: circles,

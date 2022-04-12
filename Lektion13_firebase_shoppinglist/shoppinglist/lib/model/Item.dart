@@ -6,27 +6,29 @@ class Item {
   String name;
   int amount;
   String department;
-  String id;
+  String itemID;
+  String uid;
 
-  Item(this.name, this.amount, this.department, this.id);
+  Item(this.name, this.amount, this.department, this.itemID, this.uid);
 
-  factory Item.fromJSON(Map<String, dynamic> json, String id) {
+  factory Item.fromJSON(Map<String, dynamic> json, String itemID, String uid) {
     return Item(
       json["name"],
       json["amount"],
       json["department"],
-      id,
+      itemID,
+      uid,
     );
   }
 
-  get docID => id;
-
-  set setDocID(String docId) {
-    id = docId;
-  }
-
   Map<String, dynamic> toJSON() {
-    return {"name": name, "department": department, "amount": amount};
+    return {
+      "name": name,
+      "department": department,
+      "amount": amount,
+      "itemID": itemID,
+      "uid": uid,
+    };
   }
 
   List<String> getDeparmentsValues() {

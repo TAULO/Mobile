@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppinglist/model/LocationState.dart';
-import 'package:shoppinglist/service/LocationService.dart';
+import 'package:shoppinglist/service/Location_Service.dart';
 import 'package:shoppinglist/view/googleMap_widget.dart';
 
 class LocationView extends StatefulWidget {
@@ -16,6 +16,10 @@ class LocationView extends StatefulWidget {
 class _LocationViewState extends State<LocationView> {
   LocationState state = LocationState();
 
+  Future<GeoPoint> geoFuture() async {
+    return state.getGeo;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +27,7 @@ class _LocationViewState extends State<LocationView> {
         title: const Text("Google Maps"),
       ),
       body: FutureBuilder<GeoPoint>(
-        future: state.getGeo,
+        future: geoFuture(),
         builder: (BuildContext context, AsyncSnapshot<GeoPoint> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
@@ -33,7 +37,8 @@ class _LocationViewState extends State<LocationView> {
           } else if (snapshot.hasError) {
             children = [
               IconButton(
-                onPressed: () => print("Reload"),
+                onPressed: () => null,
+                // geoFuture(), //GoogleMapWidget(snapshot: snapshot),
                 icon: const Icon(
                   Icons.refresh_rounded,
                   size: 40,

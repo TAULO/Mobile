@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppinglist/model/LocationState.dart';
-import 'package:shoppinglist/service/FirebaseService.dart';
+import 'package:shoppinglist/model/LoginState.dart';
+import 'package:shoppinglist/service/FirebaseDatabase_Service.dart';
+import 'package:shoppinglist/view/loginAuth_view.dart';
 import 'package:shoppinglist/view/location_view.dart';
 import 'package:shoppinglist/view/shopping_list_widget.dart';
 
@@ -17,9 +20,14 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) => ItemState(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => LocationState(),
+        Provider(
+          create: (context) => LoginState(),
         ),
+        StreamProvider(
+          create: (context) =>
+              Provider.of<LoginState>(context, listen: false).getUserChanges,
+          initialData: null,
+        )
       ],
       child: const MyApp(),
     ),
@@ -28,13 +36,13 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    LoginAuthView view = LoginAuthView();
     return MaterialApp(
       title: "Shopping App",
       theme: ThemeData(primaryColor: Colors.blue),
-      home: ShoppingListPage(),
+      home: LoginAuthView(),
     );
   }
 }

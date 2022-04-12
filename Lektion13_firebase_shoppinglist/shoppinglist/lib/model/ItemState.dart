@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppinglist/model/Item.dart';
-import '../service/FirebaseService.dart';
-
+import '../service/FirebaseDatabase_Service.dart';
 // tilføj filteringsmetoder her
 
 class ItemState extends ChangeNotifier {
@@ -13,9 +13,9 @@ class ItemState extends ChangeNotifier {
 
   int get getCount => _listItem.length;
 
-  ItemState() {
-    addItemsFromDB();
-  }
+  static final String uid = FirebaseAuth.instance.currentUser!.uid;
+
+  ItemState();
 
   void addItemsFromDB() {
     _service.addItemsFromDB(_listItem);
@@ -25,6 +25,7 @@ class ItemState extends ChangeNotifier {
   void addItem({required Item item}) {
     _service.addItem(item.name, item.amount, item.department);
     _listItem.add(item);
+    print(item.itemID);
     notifyListeners();
   }
 
@@ -42,7 +43,7 @@ class ItemState extends ChangeNotifier {
   void filterDeparment({required String department}) async {
     _listItem.clear();
     for (var item in await _service.filterDeparments(department)) {
-      _listItem.add(Item.fromJSON(item, "0"));
+      _listItem.add(Item.fromJSON(item, "0", uid));
     }
     notifyListeners();
   }
@@ -50,7 +51,9 @@ class ItemState extends ChangeNotifier {
   void orderAmountAsc() async {
     _listItem.clear();
     for (var item in await _service.orderAmountAsc()) {
-      if (item != null) _listItem.add(Item.fromJSON(item, "0"));
+      if (item != null) {
+        _listItem.add(Item.fromJSON(item, "0", uid));
+      }
     }
     notifyListeners();
   }
@@ -58,7 +61,9 @@ class ItemState extends ChangeNotifier {
   void orderAmountDesc() async {
     _listItem.clear();
     for (var item in await _service.orderAmountDesc()) {
-      if (item != null) _listItem.add(Item.fromJSON(item, "0"));
+      if (item != null) {
+        _listItem.add(Item.fromJSON(item, "0", uid));
+      }
     }
     notifyListeners();
   }

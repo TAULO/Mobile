@@ -6,6 +6,8 @@ class LocationService {
   final Location _location = Location();
 
   late GeoPoint _geo;
+  get getGeo => _geo;
+  get getInitLocation => initLocation();
 
   LocationService() {
     initLocation();
@@ -34,14 +36,15 @@ class LocationService {
       _geo = GeoPoint(
           currentLocation.latitude ?? 0, currentLocation.longitude ?? 0);
     });
-  }
-
-  Future<GeoPoint> getGeo() async {
-    LocationData _locationData = await _location.getLocation();
-    _location.onLocationChanged.listen((_locationData) {
-      _geo =
-          GeoPoint(_locationData.latitude ?? 0, _locationData.longitude ?? 0);
-    });
     return _geo;
   }
+
+  // Future<GeoPoint> getGeo() async {
+  //   LocationData _locationData = await _location.getLocation();
+  //   _location.onLocationChanged.listen((_locationData) {
+  //     _geo =
+  //         GeoPoint(_locationData.latitude ?? 0, _locationData.longitude ?? 0);
+  //   });
+  //   return _geo;
+  // }
 }

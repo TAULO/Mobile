@@ -13,7 +13,7 @@ class AddItemPage extends StatefulWidget {
 class _AddItemPageState extends State<AddItemPage> {
   final GlobalKey<FormState> _globalKey = GlobalKey();
 
-  Item item = Item("name", 0, "department", "docID");
+  Item item = Item("name", 0, "department", "docID", "UID");
   String? _selectedDeparment;
 
   @override
@@ -78,7 +78,7 @@ class _AddItemPageState extends State<AddItemPage> {
               }).toList(),
             ),
             ElevatedButton(
-              onPressed: () async {
+              onPressed: () {
                 final form = _globalKey.currentState;
                 if (form!.validate()) {
                   form.save();

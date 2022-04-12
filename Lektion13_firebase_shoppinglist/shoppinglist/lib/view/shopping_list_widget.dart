@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppinglist/model/ItemState.dart';
+import 'package:shoppinglist/model/LoginState.dart';
 import 'package:shoppinglist/view/add_item_widget.dart';
 import 'package:shoppinglist/view/filterAscDesc_view.dart';
 import 'package:shoppinglist/view/filterDepartment_view.dart';
@@ -15,6 +16,15 @@ class ShoppingListPage extends StatefulWidget {
 }
 
 class _ShoppingListPageState extends State<ShoppingListPage> {
+  Text? usernameText() {
+    String? username =
+        Provider.of<LoginState>(context).currentUser?.displayName.toString();
+    if (username != null) {
+      return Text(username);
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +36,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           ),
           FilterAscDesc(),
         ],
-        title: const Text("Shopping List"),
+        title: usernameText() ?? const Text("!username"),
         centerTitle: true,
       ),
       body: Stack(children: [
@@ -67,13 +77,14 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             },
           ),
         ),
-        // filter ASC DESC btn
-        const Positioned(
+        Positioned(
           bottom: 25,
           left: 15,
-          // lav en ny klasse til denne (sort asc desc)
           child: FloatingActionButton(
-            onPressed: null,
+            onPressed: () {
+              Provider.of<LoginState>(context, listen: false).logout();
+              // Navigator.pop(context);
+            },
           ),
         ),
       ]),
