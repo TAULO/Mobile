@@ -27,18 +27,14 @@ class FirebaseService {
     itemsStream!.listen((snapshot) {
       itemList.clear();
       snapshot.docs.forEach((element) {
-        itemList.add(Item.fromJSON(element.data(), element.id,
-            FirebaseAuth.instance.currentUser!.uid));
+        itemList.add(Item.fromJSON(element.data(), element.id, uid));
       });
     });
   }
 
   void addItem(String name, int amount, String department) {
     Item item = Item(name, amount, department, "0", uid);
-    _items
-        .add(item.toJSON())
-        .then((value) => item.itemID = value.id)
-        .then((value) => print(item.itemID.toString()));
+    _items.add(item.toJSON()).then((value) => item.itemID = value.id);
   }
 
   Future<void> deleteItem(Item item) {

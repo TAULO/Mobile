@@ -45,17 +45,25 @@ class _AddItemPageState extends State<AddItemPage> {
               decoration: const InputDecoration(hintText: "Amount"),
               textAlign: TextAlign.center,
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Please enter an amount";
-                }
-                if (int.parse(value) <= 0) {
-                  return "It is not possible to have less than 1 item";
+                try {
+                  if (value == null || int.parse(value) <= 0) {
+                    return "The amount must be greater than 0";
+                  }
+                  if (value.isEmpty) {
+                    return "Please enter an amount";
+                  }
+                } on FormatException catch (e) {
+                  return "Please enter a number value";
                 }
                 return null;
               },
               onSaved: (newAmount) {
-                if (newAmount != null) {
-                  item.amount = int.parse(newAmount);
+                try {
+                  if (newAmount != null) {
+                    item.amount = int.parse(newAmount);
+                  }
+                } on FormatException catch (e) {
+                  print(e.message);
                 }
               },
             ),
@@ -63,12 +71,15 @@ class _AddItemPageState extends State<AddItemPage> {
               hint: const Text("Select a deparment"),
               value: _selectedDeparment,
               onChanged: (String? newValue) {
-                setState(() {
-                  _selectedDeparment = newValue;
-                  if (_selectedDeparment != null) {
-                    item.department = _selectedDeparment.toString();
-                  }
-                });
+                setState(
+                  () {
+                    _selectedDeparment = newValue;
+                    if (_selectedDeparment != null ||
+                        _selectedDeparment != "department") {
+                      item.department = _selectedDeparment.toString();
+                    }
+                  },
+                );
               },
               items: item.getDeparmentsValues().map((deparment) {
                 return DropdownMenuItem(

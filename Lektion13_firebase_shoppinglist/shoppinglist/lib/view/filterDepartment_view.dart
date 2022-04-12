@@ -14,19 +14,13 @@ class FilterDepartmentView extends StatefulWidget {
 
 // FIX: if a deparment is not chosen and the user then tires to update the item
 // a null expcetion will accur!
-
-// FIX: if the user filters the itemsID will be zero and the doc cant find the item
 class _FilterDepartmentViewState extends State<FilterDepartmentView> {
   PopupMenuItem departmentItem(Departments dep) {
     return PopupMenuItem(
       child: Text(dep.name),
       onTap: () {
-        try {
-          Provider.of<ItemState>(context, listen: false)
-              .filterDeparment(department: dep.name);
-        } on FirebaseException catch (e) {
-          print("suub bitch");
-        }
+        Provider.of<ItemState>(context, listen: false)
+            .filterDeparment(department: dep.name);
       },
     );
   }
@@ -37,11 +31,7 @@ class _FilterDepartmentViewState extends State<FilterDepartmentView> {
       itemBuilder: (context) => [
         PopupMenuItem(
           onTap: () {
-            try {
-              Provider.of<ItemState>(context, listen: false).addItemsFromDB();
-            } on FirebaseAuthException catch (e) {
-              print("heyyy??");
-            }
+            Provider.of<ItemState>(context, listen: false).addItemsFromDB();
           },
           child: const Text("All"),
         ),

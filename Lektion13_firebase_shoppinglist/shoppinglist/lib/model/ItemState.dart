@@ -18,6 +18,7 @@ class ItemState extends ChangeNotifier {
   ItemState();
 
   void addItemsFromDB() {
+    _listItem.clear();
     _service.addItemsFromDB(_listItem);
     notifyListeners();
   }
@@ -25,7 +26,6 @@ class ItemState extends ChangeNotifier {
   void addItem({required Item item}) {
     _service.addItem(item.name, item.amount, item.department);
     _listItem.add(item);
-    print(item.itemID);
     notifyListeners();
   }
 
@@ -43,7 +43,7 @@ class ItemState extends ChangeNotifier {
   void filterDeparment({required String department}) async {
     _listItem.clear();
     for (var item in await _service.filterDeparments(department)) {
-      _listItem.add(Item.fromJSON(item, "0", uid));
+      _listItem.add(Item.fromJSON(item, item["itemID"], uid));
     }
     notifyListeners();
   }
@@ -52,7 +52,7 @@ class ItemState extends ChangeNotifier {
     _listItem.clear();
     for (var item in await _service.orderAmountAsc()) {
       if (item != null) {
-        _listItem.add(Item.fromJSON(item, "0", uid));
+        _listItem.add(Item.fromJSON(item, item["itemID"], uid));
       }
     }
     notifyListeners();
@@ -61,9 +61,7 @@ class ItemState extends ChangeNotifier {
   void orderAmountDesc() async {
     _listItem.clear();
     for (var item in await _service.orderAmountDesc()) {
-      if (item != null) {
-        _listItem.add(Item.fromJSON(item, "0", uid));
-      }
+      _listItem.add(Item.fromJSON(item, item["itemID"], uid));
     }
     notifyListeners();
   }
