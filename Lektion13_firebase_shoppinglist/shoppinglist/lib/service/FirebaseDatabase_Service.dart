@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:shoppinglist/model/ItemState.dart';
-import 'package:shoppinglist/service/FirebaseAuth_Service.dart';
 import '../model/Item.dart';
 
 class FirebaseService {
@@ -33,8 +30,15 @@ class FirebaseService {
   }
 
   void addItem(String name, int amount, String department) {
+    if (department == "department") {
+      throw const FormatException("Please pick a department");
+    }
     Item item = Item(name, amount, department, "0", uid);
-    _items.add(item.toJSON()).then((value) => item.itemID = value.id);
+    _items
+        .add(item.toJSON())
+        .then((value) => item.itemID = value.id)
+        .then((value) => name + " was added")
+        .catchError((error) => print("Failed to add $error"));
   }
 
   Future<void> deleteItem(Item item) {

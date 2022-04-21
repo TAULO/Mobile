@@ -15,6 +15,40 @@ class ItemRow extends StatefulWidget {
 }
 
 class _ItemRowState extends State<ItemRow> {
+  Text departmentEmojies(String department) {
+    switch (department) {
+      case "alcohol":
+        {
+          return const Text("🍷");
+          // return Text(parser.parseEmojis(parser.getEmoji("🍷").toString())[0]);
+        }
+      case "deli":
+        {
+          return const Text("🍱");
+          // return Text(parser.parseEmojis(parser.getEmoji("🍱").toString())[0]);
+        }
+      case "health":
+        {
+          return const Text("💊");
+          // return Text(parser.parseEmojis(parser.getEmoji("💊").toString())[0]);
+        }
+      case "meat":
+        {
+          return const Text("🥩");
+          // return Text(parser.parseEmojis(parser.getEmoji("🥩").toString())[0]);
+        }
+      case "seafood":
+        {
+          // return Text(parser.parseEmojis(parser.getEmoji("🦞").toString())[0]);
+          return const Text("🦞");
+        }
+      default:
+        {
+          return const Text("🙉");
+        }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -23,14 +57,6 @@ class _ItemRowState extends State<ItemRow> {
       child: Container(
         color: const Color.fromARGB(255, 136, 206, 238),
         child: ListTile(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => UpdateItemPage(widget.item),
-              ),
-            );
-          },
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           title: Text(
@@ -42,9 +68,14 @@ class _ItemRowState extends State<ItemRow> {
             ),
             textAlign: TextAlign.center,
           ),
-          subtitle: Text(
-            widget.item.department,
-            textAlign: TextAlign.center,
+          subtitle: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(widget.item.department),
+              const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 2)),
+              departmentEmojies(widget.item.department),
+            ],
           ),
           leading: Container(
             padding: const EdgeInsets.only(right: 12.0),
@@ -61,6 +92,38 @@ class _ItemRowState extends State<ItemRow> {
               textAlign: TextAlign.justify,
             ),
           ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UpdateItemPage(widget.item),
+              ),
+            );
+          },
+          onLongPress: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  content: Text("Do you want to delete ${widget.item.name}?"),
+                  actions: [
+                    SimpleDialogOption(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text("No"),
+                    ),
+                    SimpleDialogOption(
+                      onPressed: () {
+                        Provider.of<ItemState>(context, listen: false)
+                            .deleteItem(item: widget.item);
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Delete"),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
           trailing: IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {

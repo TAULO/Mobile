@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppinglist/model/ItemState.dart';
-import 'package:shoppinglist/view/loginAuth_view.dart';
 import 'package:shoppinglist/view/shopping_list_widget.dart';
 
 import '../model/LoginState.dart';
@@ -24,14 +23,17 @@ class _LoginAuthViewState extends State<LoginAuthView> {
   bool errorBol = false;
   String errorMessage = "";
   late Color messageColor;
-  Text errorMessageText() {
+  Align errorMessageText() {
     if (errorBol) {
-      return Text(
-        errorMessage,
-        style: TextStyle(color: Colors.redAccent),
+      return Align(
+        alignment: Alignment.center,
+        child: Text(
+          errorMessage,
+          style: const TextStyle(color: Colors.redAccent),
+        ),
       );
     } else {
-      return const Text("");
+      return const Align();
     }
   }
 
@@ -70,16 +72,83 @@ class _LoginAuthViewState extends State<LoginAuthView> {
       final form = _globalKey.currentState;
       if (form!.validate()) {
         form.save();
-        Future<String> currentUser =
-            Provider.of<LoginState>(context, listen: false).createUserWithEmail(
-                email: email, password: password, username: username);
-        String error = await currentUser;
+        // Future<String>? currentUser =
+        // Provider.of<LoginState>(context, listen: false).createUserWithEmail(
+        //     email: email, password: password, username: username);
+        // String error = await currentUser;
         setState(() {
-          errorBol = true;
-          errorMessage = error;
+          // errorBol = true;
+          // errorMessage = error;
           // messageColor = Colors.greenAccent;
           messageColor = Colors.redAccent;
         });
+        String emailVal = email;
+        String passwordVal = password;
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text("login"),
+              actions: [
+                TextFormField(
+                  initialValue: email,
+                  textAlign: TextAlign.center,
+                  onChanged: (val) {
+                    setState(() {
+                      emailVal = val;
+                      print(emailVal);
+                      print(email);
+                      if (email != emailVal) {
+                        errorMessage = "The credential does not match";
+                        errorBol = true;
+                        print(errorBol);
+                      } else {
+                        errorBol = false;
+                        print(errorBol);
+                      }
+                    });
+                  },
+                  // validator: (val) {
+                  //   if (emailVal != email) {
+                  //     return "The credential does not match";
+                  //   }
+                  //   return null;
+                  // },
+                ),
+                TextFormField(
+                  initialValue: password,
+                  textAlign: TextAlign.center,
+                  obscureText: true,
+                  validator: (val) {
+                    if (val != password) {
+                      return "The credential does not match";
+                    }
+                    return null;
+                  },
+                ),
+                errorMessageText(),
+                Align(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (email != emailVal) {
+                        setState(() {
+                          errorMessage = "The credential does not match";
+                          errorBol = true;
+                        });
+                      } else {
+                        setState(() {
+                          errorBol = false;
+                        });
+                      }
+                    },
+                    child: const Text("Login"),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
       }
     }
   }
@@ -147,6 +216,7 @@ class _LoginAuthViewState extends State<LoginAuthView> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                 child: TextFormField(
+                  obscureText: true,
                   decoration: const InputDecoration(
                     hintText: "password",
                     hintStyle: TextStyle(),
@@ -176,9 +246,8 @@ class _LoginAuthViewState extends State<LoginAuthView> {
                     Future<String> currentUser =
                         Provider.of<LoginState>(context, listen: false)
                             .signInWithEmail(email: email, password: password);
-                    // Provider.of<LoginState>(context, listen: false)
-                    //     .signInWithEmail(
-                    //         email: "admin@admin.com", password: "admin123");
+                    Provider.of<ItemState>(context, listen: false)
+                        .addItemsFromDB();
                     String error = await currentUser;
                     setState(() {
                       errorBol = true;

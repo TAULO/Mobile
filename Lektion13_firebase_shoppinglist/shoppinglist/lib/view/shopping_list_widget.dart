@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shoppinglist/model/ItemState.dart';
 import 'package:shoppinglist/model/LoginState.dart';
 import 'package:shoppinglist/view/add_item_widget.dart';
 import 'package:shoppinglist/view/filterAscDesc_view.dart';
 import 'package:shoppinglist/view/filterDepartment_view.dart';
 import 'package:shoppinglist/view/item_list_widget.dart';
 import 'package:shoppinglist/view/location_view.dart';
+import 'package:shoppinglist/view/loginAuth_view.dart';
 
 class ShoppingListPage extends StatefulWidget {
   ShoppingListPage({Key? key}) : super(key: key);
@@ -82,9 +82,37 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           left: 15,
           child: FloatingActionButton(
             onPressed: () {
-              Provider.of<LoginState>(context, listen: false).logout();
-              // Navigator.pop(context);
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Logout"),
+                      content: const Text("Are you sure you want to logout?"),
+                      actions: [
+                        SimpleDialogOption(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text("No"),
+                        ),
+                        SimpleDialogOption(
+                          onPressed: () {
+                            Provider.of<LoginState>(context, listen: false)
+                                .logout();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginAuthView(),
+                              ),
+                            );
+                          },
+                          child: const Text("Yes"),
+                        ),
+                      ],
+                    );
+                  });
             },
+            child: const Icon(
+              Icons.logout_rounded,
+            ),
           ),
         ),
       ]),

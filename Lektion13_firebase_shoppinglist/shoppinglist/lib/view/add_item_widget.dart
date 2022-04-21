@@ -16,6 +16,23 @@ class _AddItemPageState extends State<AddItemPage> {
   Item item = Item("name", 0, "department", "docID", "UID");
   String? _selectedDeparment;
 
+  Widget dynWidget = const Text("");
+  addDynWidget(Widget widget) {
+    setState(() {
+      dynWidget = widget;
+    });
+  }
+
+  Text departmentErrorText(bool hasError, String ex) {
+    if (hasError) {
+      return Text(
+        ex,
+        style: const TextStyle(color: Colors.red),
+      );
+    }
+    return const Text("");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,18 +69,14 @@ class _AddItemPageState extends State<AddItemPage> {
                   if (value.isEmpty) {
                     return "Please enter an amount";
                   }
-                } on FormatException catch (e) {
+                } on FormatException {
                   return "Please enter a number value";
                 }
                 return null;
               },
               onSaved: (newAmount) {
-                try {
-                  if (newAmount != null) {
-                    item.amount = int.parse(newAmount);
-                  }
-                } on FormatException catch (e) {
-                  print(e.message);
+                if (newAmount != null) {
+                  item.amount = int.parse(newAmount);
                 }
               },
             ),
@@ -81,21 +94,30 @@ class _AddItemPageState extends State<AddItemPage> {
                   },
                 );
               },
-              items: item.getDeparmentsValues().map((deparment) {
-                return DropdownMenuItem(
-                  child: Text(deparment),
-                  value: deparment,
-                );
-              }).toList(),
+              items: item.getDeparmentsValues().map(
+                (deparment) {
+                  return DropdownMenuItem(
+                    child: Text(deparment),
+                    value: deparment,
+                  );
+                },
+              ).toList(),
+            ),
+            Container(
+              child: dynWidget,
             ),
             ElevatedButton(
               onPressed: () {
                 final form = _globalKey.currentState;
                 if (form!.validate()) {
-                  form.save();
-                  Provider.of<ItemState>(context, listen: false)
-                      .addItem(item: item);
-                  Navigator.pop(context);
+                  try {
+                    form.save();
+                    Provider.of<ItemState>(context, listen: false)
+                        .addItem(item: item);
+                    Navigator.pop(context);
+                  } on FormatException catch (ex) {
+                    addDynWidget(departmentErrorText(true, ex.message));
+                  }
                 }
               },
               child: const Text("Add Item"),

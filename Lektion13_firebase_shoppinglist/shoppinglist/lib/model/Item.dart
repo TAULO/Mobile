@@ -9,7 +9,9 @@ class Item {
   String itemID;
   String uid;
 
-  Item(this.name, this.amount, this.department, this.itemID, this.uid);
+  Item(this.name, this.amount, this.department, this.itemID, this.uid) {
+    print("item was called");
+  }
 
   factory Item.fromJSON(Map<String, dynamic> json, String itemID, String uid) {
     return Item(
@@ -31,9 +33,11 @@ class Item {
     };
   }
 
+  // implement so the first letter in department will be upper case
   List<String> getDeparmentsValues() {
     List<String> departments = [];
     for (var department in Departments.values) {
+      department.name.split("")[0].toUpperCase();
       departments.add(department.name);
     }
     return departments;

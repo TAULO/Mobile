@@ -7,18 +7,16 @@ import '../service/FirebaseDatabase_Service.dart';
 
 class ItemState extends ChangeNotifier {
   final FirebaseService _service = FirebaseService();
-
   final List<Item> _listItem = [];
-  List<Item> get getItems => _listItem;
-
-  int get getCount => _listItem.length;
 
   static final String uid = FirebaseAuth.instance.currentUser!.uid;
+
+  List<Item> get getItems => _listItem;
+  int get getCount => _listItem.length;
 
   ItemState();
 
   void addItemsFromDB() {
-    _listItem.clear();
     _service.addItemsFromDB(_listItem);
     notifyListeners();
   }

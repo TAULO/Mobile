@@ -12,8 +12,6 @@ class FilterDepartmentView extends StatefulWidget {
   State<FilterDepartmentView> createState() => _FilterDepartmentViewState();
 }
 
-// FIX: if a deparment is not chosen and the user then tires to update the item
-// a null expcetion will accur!
 class _FilterDepartmentViewState extends State<FilterDepartmentView> {
   PopupMenuItem departmentItem(Departments dep) {
     return PopupMenuItem(
