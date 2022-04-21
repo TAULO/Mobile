@@ -107,6 +107,35 @@ class _UpdateAccountState extends State<UpdateAccount> {
           ],
         ),
       ),
+      floatingActionButton: IconButton(
+        icon: const Icon(Icons.delete),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text("Delete ${widget.account.name}"),
+                content: Text(
+                    "Are you sure you want to delete: ${widget.account.name}?"
+                    "\n"
+                    "This action can not be reversed"),
+                actions: [
+                  SimpleDialogOption(
+                    child: const Text("cancel"),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  SimpleDialogOption(
+                    child: const Text("delete"),
+                    onPressed: () => Provider.of<FirebaseDatabaseState>(context,
+                            listen: false)
+                        .removeAccount(account: widget.account),
+                  )
+                ],
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
