@@ -58,7 +58,7 @@ class _AddAccountState extends State<AddAccount> {
                 textAlign: TextAlign.center,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "fill this field";
+                    return "Fill this field";
                   }
                   return null;
                 },
@@ -88,24 +88,34 @@ class _AddAccountState extends State<AddAccount> {
               ).toList(),
             ),
             kindHasErrorWidget(),
-            ElevatedButton(
-                onPressed: () {
-                  final form = _globalKey.currentState;
-                  if (form!.validate()) {
-                    try {
-                      form.save();
-                      Provider.of<FirebaseDatabaseState>(context, listen: false)
-                          .addAccount(accName: accName, kind: kind);
-                      Navigator.pop(context);
-                    } on FormatException catch (e) {
-                      setState(() {
-                        hasError = true;
-                        hasErrorText = e.message;
-                      });
-                    }
-                  }
-                },
-                child: const Text("add"))
+          ],
+        ),
+      ),
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          final form = _globalKey.currentState;
+          if (form!.validate()) {
+            try {
+              form.save();
+              Provider.of<FirebaseDatabaseState>(context, listen: false)
+                  .addAccount(accName: accName, kind: kind);
+              Navigator.pop(context);
+            } on FormatException catch (e) {
+              setState(() {
+                hasError = true;
+                hasErrorText = e.message;
+              });
+            }
+          }
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: const [
+            Icon(Icons.add_circle_rounded),
+            Text(
+              " Create Account",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ),

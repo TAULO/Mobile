@@ -8,7 +8,7 @@ import 'account_listbuilder.dart';
 import 'add_account.dart';
 
 class AccountHomepage extends StatelessWidget {
-  AccountHomepage({Key? key}) : super(key: key);
+  const AccountHomepage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +21,27 @@ class AccountHomepage extends StatelessWidget {
         ),
       ),
       body: const AccountListBuilder(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddAccount()),
-          );
-        },
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AddAccount()),
+              );
+            },
+            child: Row(
+              children: const [
+                Icon(Icons.add_circle),
+                Text(
+                  " New Account",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

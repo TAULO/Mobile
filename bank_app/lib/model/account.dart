@@ -6,50 +6,56 @@ import 'transaction.dart';
 import 'kind.dart';
 
 class Account {
-  static const String _collectionName = "bank_database";
-
   String name;
   Kind kind;
   late String iban;
   late String itemID;
 
-  final double _balance = 200000.0;
+  double _balance = 200000.0;
 
   final List<MoneyTransaction> _transactions = [];
-  List<MoneyTransaction> get transactions => _transactions;
 
-  Account({
-    required this.name,
-    required this.kind,
-  }) {
-    iban = generateIbanNumber();
-    itemID = FirebaseFirestore.instance.collection(_collectionName).doc().id;
-    print("accid: " + itemID);
-  }
+  Account(
+      {required this.name,
+      required this.kind,
+      required this.iban,
+      required this.itemID});
+
+  List<MoneyTransaction> get transactions => _transactions;
 
   double get getBalance {
     return _balance;
   }
 
-  String? get getItemID => itemID;
-
-  set setItemID(id) {
-    itemID = id;
+  set setBalance(value) {
+    _balance -= value;
   }
 
-  factory Account.fromJSON(Map<String, dynamic> json, String itemID) {
+  get getItemID => itemID;
+
+  factory Account.fromJSON(Map<String, dynamic> json) {
+    DateTime timestampToDatetime =
+        (json["kind"]["creationDate"] as Timestamp).toDate();
     return Account(
       name: json["name"],
-      kind: json["kind"],
+      kind: Kind(name: json["kind"]["name"], creationDate: timestampToDatetime),
+      iban: json["iban"],
+      itemID: json["itemID"],
     );
   }
 
   Map<String, dynamic> toJSON() {
+    List<dynamic> moneyTransactions = [];
+    for (var item in _transactions) {
+      Map<String, dynamic> transactions = item.toJSON();
+      moneyTransactions.add(transactions);
+    }
     return {
       "name": name,
       "iban": iban,
       "kind": kind.toJSON(),
       "itemID": itemID,
+      "transactions": moneyTransactions,
     };
   }
 
@@ -68,7 +74,7 @@ class Account {
       }
       randomNumbers += rng.nextInt(10).toString();
     }
-    return countryCodes.elementAt(rng.nextInt(countryCodes.length)) +
+    return iban = countryCodes.elementAt(rng.nextInt(countryCodes.length)) +
         randomNumbers;
   }
 

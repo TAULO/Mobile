@@ -1,3 +1,4 @@
+import 'package:bank_app/view/delete_account.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -86,55 +87,44 @@ class _UpdateAccountState extends State<UpdateAccount> {
               ).toList(),
             ),
             kindHasErrorWidget(),
-            ElevatedButton(
-                onPressed: () {
-                  final form = _globalKey.currentState;
-                  if (form!.validate()) {
-                    try {
-                      form.save();
-                      Provider.of<FirebaseDatabaseState>(context, listen: false)
-                          .updateAccount(account: widget.account);
-                      Navigator.pop(context);
-                    } on FormatException catch (e) {
-                      setState(() {
-                        hasError = true;
-                        hasErrorText = e.message;
-                      });
-                    }
-                  }
-                },
-                child: const Text("add"))
           ],
         ),
       ),
-      floatingActionButton: IconButton(
-        icon: const Icon(Icons.delete),
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text("Delete ${widget.account.name}"),
-                content: Text(
-                    "Are you sure you want to delete: ${widget.account.name}?"
-                    "\n"
-                    "This action can not be reversed"),
-                actions: [
-                  SimpleDialogOption(
-                    child: const Text("cancel"),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  SimpleDialogOption(
-                    child: const Text("delete"),
-                    onPressed: () => Provider.of<FirebaseDatabaseState>(context,
-                            listen: false)
-                        .removeAccount(account: widget.account),
-                  )
-                ],
-              );
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 165),
+            child: DeleteAccount(account: widget.account),
+          ),
+          GestureDetector(
+            onTap: () {
+              final form = _globalKey.currentState;
+              if (form!.validate()) {
+                try {
+                  form.save();
+                  Provider.of<FirebaseDatabaseState>(context, listen: false)
+                      .updateAccount(account: widget.account);
+                  Navigator.pop(context);
+                } on FormatException catch (e) {
+                  setState(() {
+                    hasError = true;
+                    hasErrorText = e.message;
+                  });
+                }
+              }
             },
-          );
-        },
+            child: Row(
+              children: const [
+                Icon(Icons.add_circle_rounded),
+                Text(
+                  " Update Account",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
