@@ -19,10 +19,10 @@ class MoneytransactionListBuilder extends StatelessWidget {
     return Consumer<FirebaseDatabaseState>(
       builder: (context, state, child) {
         return ListView.builder(
-          itemCount: state.moneyTransactions.length,
+          itemCount: account.transactions.length,
           itemBuilder: (context, index) {
             return MoneyTransactionListRow(
-              transaction: state.moneyTransactions[index],
+              transaction: account.transactions[index],
               account: account,
             );
           },

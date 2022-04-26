@@ -1,6 +1,5 @@
 import 'package:bank_app/model/transaction.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import '../model/account.dart';
 import '../model/kind.dart';
@@ -34,9 +33,6 @@ class FirebaseDatabaseService {
         iban: "iban",
         itemID: _collectionReference.doc().id);
     account.generateIbanNumber();
-    // account.setItemID =
-    //     FirebaseFirestore.instance.collection(_collectionName).doc().id;
-    // account.iban = account.generateIbanNumber();
     list.add(account);
     _collectionReference.doc(account.getItemID).set(account.toJSON()).onError(
         (error, stackTrace) =>
@@ -53,7 +49,6 @@ class FirebaseDatabaseService {
   }
 
   void updateAccount(Account account) {
-    print(account.itemID);
     _collectionReference
         .doc(account.itemID)
         .update(account.toJSON())
@@ -64,16 +59,15 @@ class FirebaseDatabaseService {
 
   //----------------------------- Money Transaction -----------------------------
 
-  void getMoneyTransactions(
-      Account account, List<MoneyTransaction> moneyTransaction) {
+  void getMoneyTransactions(Account account) {
     itemsStream = firestore.collection(_collectionName).snapshots();
     itemsStream!.listen((event) {
       event.docs.forEach((element) {
         if (element.get("itemID") == account.itemID) {
-          moneyTransaction.clear();
+          account.transactions.clear();
           List<dynamic> list = element.get("transactions");
           for (var item in list) {
-            moneyTransaction.add(MoneyTransaction.fromJSON(item));
+            account.transactions.add(MoneyTransaction.fromJSON(item));
           }
         }
       });
@@ -83,6 +77,6 @@ class FirebaseDatabaseService {
   void addMoneyTransaction(Account account, MoneyTransaction transaction) {
     _collectionReference.doc(account.itemID).update({
       "transactions": FieldValue.arrayUnion([transaction.toJSON()])
-    }).then((value) => "added: ${transaction.beneficiary}");
+    }).then((value) => print("added: ${transaction.amount}"));
   }
 }

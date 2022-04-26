@@ -11,7 +11,7 @@ class Account {
   late String iban;
   late String itemID;
 
-  double _balance = 200000.0;
+  double _balance = 0;
 
   final List<MoneyTransaction> _transactions = [];
 
@@ -24,11 +24,20 @@ class Account {
   List<MoneyTransaction> get transactions => _transactions;
 
   double get getBalance {
+    double totalTransactions = 0;
+    for (var item in _transactions) {
+      totalTransactions += item.amount;
+    }
+    _balance = totalTransactions;
     return _balance;
   }
 
-  set setBalance(value) {
-    _balance -= value;
+  set setBalance(double value) {
+    if (value < 0) {
+      _balance -= value;
+    } else if (value > 0) {
+      _balance += value;
+    }
   }
 
   get getItemID => itemID;
@@ -46,9 +55,13 @@ class Account {
 
   Map<String, dynamic> toJSON() {
     List<dynamic> moneyTransactions = [];
-    for (var item in _transactions) {
-      Map<String, dynamic> transactions = item.toJSON();
-      moneyTransactions.add(transactions);
+    if (_transactions.isEmpty) {
+      print("list is empty");
+    } else {
+      for (var item in _transactions) {
+        Map<String, dynamic> transactions = item.toJSON();
+        moneyTransactions.add(transactions);
+      }
     }
     return {
       "name": name,

@@ -32,7 +32,7 @@ class DeleteAccount extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: ((context) => AccountHomepage()),
+                          builder: ((context) => const AccountHomepage()),
                         ));
                     Provider.of<FirebaseDatabaseState>(context, listen: false)
                         .removeAccount(account: account);

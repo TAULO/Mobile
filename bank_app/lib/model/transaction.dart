@@ -1,5 +1,3 @@
-//firebase: et array som indholder maps af fields amount, ben og date
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MoneyTransaction {
@@ -28,10 +26,43 @@ class MoneyTransaction {
     };
   }
 
+  set setAmount(value) {
+    amount = value;
+  }
+
+  String monthName(DateTime currMonth) {
+    switch (currMonth.month) {
+      case 1:
+        return "Jan";
+      case 2:
+        return "Feb";
+      case 3:
+        return "Mar";
+      case 4:
+        return "Apr";
+      case 5:
+        return "May";
+      case 6:
+        return "Jun";
+      case 7:
+        return "Jul";
+      case 8:
+        return "Aug";
+      case 9:
+        return "Sep";
+      case 10:
+        return "Ocb";
+      case 11:
+        return "Nov";
+      case 12:
+        return "Dec";
+      default:
+        return "Invalid month";
+    }
+  }
+
   @override
   String toString() {
-    // TODO: implement toString
-    // return "${creationDate.month} ${creationDate.day}, ${creationDate.year}";
     return beneficiary;
   }
 }

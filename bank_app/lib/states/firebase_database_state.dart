@@ -12,9 +12,9 @@ class FirebaseDatabaseState extends ChangeNotifier {
   List<Account> get accounts => _accounts;
   int get accountsLength => _accounts.length;
 
-  final List<MoneyTransaction> _moneyTransactions = [];
-  List<MoneyTransaction> get moneyTransactions => _moneyTransactions;
-  int get moneyTransactionsLength => _moneyTransactions.length;
+  // List<MoneyTransaction> _moneyTransactions = [];
+  // List<MoneyTransaction> get moneyTransactions => _moneyTransactions;
+  // int get moneyTransactionsLength => _moneyTransactions.length;
 
   FirebaseDatabaseState() {
     addAllAccountsToDB();
@@ -22,7 +22,6 @@ class FirebaseDatabaseState extends ChangeNotifier {
 
   void addAllAccountsToDB() {
     _service.addAllAccountsToDB(_accounts);
-    print(_accounts);
     notifyListeners();
   }
 
@@ -40,21 +39,20 @@ class FirebaseDatabaseState extends ChangeNotifier {
 
   void updateAccount({required Account account}) {
     _service.updateAccount(account);
-    print("notified UPDATE");
     notifyListeners();
   }
 
   //----------------------------- Money Transaction -----------------------------
 
   void getMoneyTransactions({required Account account}) {
-    _service.getMoneyTransactions(account, _moneyTransactions);
+    _service.getMoneyTransactions(account);
     notifyListeners();
   }
 
   void addMoneyTransaction(
       {required Account account, required MoneyTransaction transaction}) {
     _service.addMoneyTransaction(account, transaction);
-    _moneyTransactions.add(transaction);
+    account.transactions.add(transaction);
     notifyListeners();
   }
 }

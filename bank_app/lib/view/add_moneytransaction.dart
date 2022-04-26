@@ -6,7 +6,8 @@ import 'package:provider/provider.dart';
 import '../model/account.dart';
 
 class AddMoneyTransactions extends StatefulWidget {
-  AddMoneyTransactions({Key? key, required this.account}) : super(key: key);
+  const AddMoneyTransactions({Key? key, required this.account})
+      : super(key: key);
   final Account account;
 
   @override
@@ -32,34 +33,61 @@ class _AddMoneyTransactionsState extends State<AddMoneyTransactions> {
       body: Form(
         key: _globalKey,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            TextFormField(
-              decoration: const InputDecoration(hintText: "amount"),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Insert an amount";
-                }
-                return null;
-              },
-              onSaved: (value) {
-                if (value != null) {
-                  transaction.amount = double.parse(value);
-                }
-              },
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 75, 8, 8),
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  hintText: "amount",
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                ),
+                textAlign: TextAlign.center,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Insert an amount";
+                  }
+                  if (double.parse(value) == 0) {
+                    return "Amount can not be 0";
+                  }
+                  if (widget.account.getBalance + double.parse(value) < 0) {
+                    return "Insufficient funds";
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  if (value != null) {
+                    transaction.setAmount = double.parse(value);
+                  }
+                },
+              ),
             ),
-            TextFormField(
-              decoration: const InputDecoration(hintText: "Beneficiary name"),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Insert an amount";
-                }
-                return null;
-              },
-              onSaved: (value) {
-                if (value != null) {
-                  transaction.beneficiary = value;
-                }
-              },
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  hintText: "Beneficiary name",
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                ),
+                textAlign: TextAlign.center,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Insert an amount";
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  if (value != null) {
+                    transaction.beneficiary = value;
+                  }
+                },
+              ),
             ),
           ],
         ),
@@ -73,9 +101,6 @@ class _AddMoneyTransactionsState extends State<AddMoneyTransactions> {
               final form = _globalKey.currentState;
               if (form!.validate()) {
                 form.save();
-                setState(() {
-                  widget.account.setBalance = transaction.amount;
-                });
                 Navigator.pop(context);
                 Provider.of<FirebaseDatabaseState>(context, listen: false)
                     .addMoneyTransaction(

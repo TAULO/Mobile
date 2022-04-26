@@ -52,9 +52,14 @@ class _AddAccountState extends State<AddAccount> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 100),
+              padding: const EdgeInsets.fromLTRB(8, 75, 8, 8),
               child: TextFormField(
-                decoration: const InputDecoration(hintText: "Account name"),
+                decoration: const InputDecoration(
+                    hintText: "Account name",
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1),
+                        borderRadius: BorderRadius.all(Radius.circular(10)))),
                 textAlign: TextAlign.center,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
