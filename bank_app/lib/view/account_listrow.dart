@@ -14,11 +14,6 @@ class AccountListRow extends StatefulWidget {
 }
 
 class _AccountListRowState extends State<AccountListRow> {
-  // double calculateBalance() {
-  //   return Provider.of<FirebaseDatabaseState>(context)
-  //       .calculateBalance(widget.account);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Card(

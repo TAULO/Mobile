@@ -1,6 +1,3 @@
-import 'package:bank_app/model/kind.dart';
-import 'package:bank_app/model/transaction.dart';
-import 'package:bank_app/service/firebase_database_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 

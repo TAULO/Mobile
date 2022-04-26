@@ -3,8 +3,6 @@ import 'package:bank_app/states/firebase_database_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../model/account.dart';
-
 class AddAccount extends StatefulWidget {
   const AddAccount({Key? key}) : super(key: key);
 
@@ -16,7 +14,6 @@ class _AddAccountState extends State<AddAccount> {
   final Kind kind = Kind(name: "", creationDate: DateTime.now());
   String accName = "";
 
-  // fix dis
   final GlobalKey<FormState> _globalKey = GlobalKey();
 
   String _selectedKind = "Savings";

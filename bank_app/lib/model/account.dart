@@ -56,7 +56,6 @@ class Account {
   Map<String, dynamic> toJSON() {
     List<dynamic> moneyTransactions = [];
     if (_transactions.isEmpty) {
-      print("list is empty");
     } else {
       for (var item in _transactions) {
         Map<String, dynamic> transactions = item.toJSON();
